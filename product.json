@@ -1,0 +1,17 @@
+{
+  "name": "HTML to Markdown Pro",
+  "slug": "html-to-markdown-pro",
+  "tagline": "Convert HTML to clean Markdown instantly. Perfect for documentation, content migration and note-taking workflows.",
+  "description": "Convert HTML to clean Markdown instantly. Perfect for documentation, content migration and note-taking workflows.",
+  "price": "9",
+  "features": [],
+  "tech_stack": "Vercel + Node.js",
+  "status": "building",
+  "vercel_url": null,
+  "github_url": null,
+  "lemonsqueezy_checkout_url": null,
+  "lemonsqueezy_product_id": null,
+  "webhook_url": null,
+  "created_cycle": null,
+  "deployed_cycle": null
+}

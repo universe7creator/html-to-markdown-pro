@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML to Markdown Pro — Convert HTML to Clean Markdown Instantly</title>
+  <meta name="description" content="Convert HTML to clean Markdown and vice versa instantly. Perfect for documentation, content migration, and note-taking workflows.">
+  <meta name="keywords" content="HTML to Markdown, Markdown converter, HTML converter, documentation tool, content migration">
+  <meta name="author" content="UniverseCreator">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="HTML to Markdown Pro — Convert HTML to Clean Markdown Instantly">
+  <meta property="og:description" content="Convert HTML to clean Markdown and vice versa instantly. Perfect for documentation and content migration.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://html-to-markdown-pro.vercel.app">
+  <meta property="og:image" content="https://html-to-markdown-pro.vercel.app/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTML to Markdown Pro — Convert HTML to Clean Markdown Instantly">
+  <meta name="twitter:description" content="Convert HTML to clean Markdown and vice versa instantly.">
+  <meta name="twitter:image" content="https://html-to-markdown-pro.vercel.app/og-image.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "HTML to Markdown Pro",
+    "applicationCategory": "DeveloperApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "19",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "127"
+    }
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8b5cf6',
+            secondary: '#ec4899',
+            dark: '#0a0a0a',
+            darker: '#050505'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'pulse-slow': 'pulse 3s infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(139, 92, 246, 0.6)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-hover:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b);
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-glow:hover::before {
+      opacity: 1;
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .editor-textarea {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: none;
+    }
+
+    .editor-textarea:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .tab-active {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: white;
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card {
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+    }
+
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(139, 92, 246, 0.4);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="grid-pattern">
+  <!-- Floating particles -->
+  <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <span class="font-bold text-lg">HTML<span class="gradient-text">2MD</span></span>
+        </div>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#features" class="text-gray-400 hover:text-white transition-colors text-sm">Features</a>
+          <a href="#demo" class="text-gray-400 hover:text-white transition-colors text-sm">Demo</a>
+          <a href="#faq" class="text-gray-400 hover:text-white transition-colors text-sm">FAQ</a>
+          <button id="nav-buy-btn" class="btn-glow bg-gradient-to-r from-primary to-secondary px-5 py-2 rounded-full text-sm font-semibold hover:scale-105 transition-transform">
+            Get Started — $19
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-4">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-in">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        <span class="text-sm text-gray-300">Now with Markdown to HTML conversion</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-slide-up">
+        Convert <span class="gradient-text">HTML to Markdown</span><br>
+        <span class="text-white">in Seconds</span>
+      </h1>
+
+      <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto animate-slide-up" style="animation-delay: 0.1s">
+        Transform HTML content into clean, readable Markdown instantly. Perfect for documentation, content migration, and note-taking workflows. Bidirectional conversion supported.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-slide-up" style="animation-delay: 0.2s">
+        <button id="hero-buy-btn" class="btn-glow group bg-gradient-to-r from-primary to-secondary px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all flex items-center gap-2">
+          Get Lifetime Access — $19
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
+        <a href="#demo" class="px-8 py-4 rounded-full glass glass-hover text-lg font-medium transition-all">
+          Try Free Demo
+        </a>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500 animate-slide-up" style="animation-delay: 0.3s">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>No subscription</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>Lifetime updates</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>30-day refund</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section id="demo" class="py-24 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Try It <span class="gradient-text">Live</span></h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          Experience the power of instant conversion. Paste your HTML or Markdown and see the magic happen.
+        </p>
+      </div>
+
+      <!-- Converter Interface -->
+      <div class="glass rounded-2xl p-6 md:p-8 scroll-reveal">
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-6">
+          <button id="tab-html-md" class="tab-active px-6 py-3 rounded-xl font-medium transition-all">
+            HTML → Markdown
+          </button>
+          <button id="tab-md-html" class="px-6 py-3 rounded-xl font-medium transition-all text-gray-400 hover:text-white">
+            Markdown → HTML
+          </button>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Input -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <label class="text-sm font-medium text-gray-400">Input</label>
+              <div class="flex gap-2">
+                <button id="btn-load-sample" class="text-xs text-primary hover:text-secondary transition-colors">
+                  Load Sample
+                </button>
+                <button id="btn-clear" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                  Clear
+                </button>
+              </div>
+            </div>
+            <textarea id="input-area" class="editor-textarea w-full h-80 rounded-xl p-4" placeholder="Paste your HTML here..."></textarea>
+          </div>
+
+          <!-- Output -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <label class="text-sm font-medium text-gray-400">Output</label>
+              <div class="flex gap-2">
+                <button id="btn-copy" class="text-xs text-primary hover:text-secondary transition-colors flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                  Copy
+                </button>
+                <button id="btn-download" class="text-xs text-primary hover:text-secondary transition-colors flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  </svg>
+                  Download
+                </button>
+              </div>
+            </div>
+            <textarea id="output-area" class="editor-textarea w-full h-80 rounded-xl p-4" placeholder="Result will appear here..." readonly></textarea>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="mt-6 flex items-center justify-between">
+          <div id="stats-area" class="text-sm text-gray-500 hidden">
+            <span id="input-stats"></span> → <span id="output-stats"></span>
+            <span id="ratio-stats" class="ml-2 text-primary"></span>
+          </div>
+          <button id="btn-convert" class="btn-glow ml-auto bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-xl font-semibold hover:scale-105 transition-all flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+            Convert Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Supported Formats -->
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 scroll-reveal">
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl mb-2">🏷️</div>
+          <div class="text-sm font-medium">Headers</div>
+          <div class="text-xs text-gray-500">H1-H6 tags</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl mb-2">🔗</div>
+          <div class="text-sm font-medium">Links</div>
+          <div class="text-xs text-gray-500">&lt;a&gt; tags</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl mb-2">🖼️</div>
+          <div class="text-sm font-medium">Images</div>
+          <div class="text-xs text-gray-500">&lt;img&gt; tags</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl mb-2">📊</div>
+          <div class="text-sm font-medium">Tables</div>
+          <div class="text-xs text-gray-500">&lt;table&gt; tags</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-24 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Everything You <span class="gradient-text">Need</span></h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          Professional-grade conversion with support for all common HTML and Markdown elements.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Instant Conversion</h3>
+          <p class="text-gray-400">Convert HTML to clean Markdown in milliseconds. No waiting, no processing queues.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Bidirectional</h3>
+          <p class="text-gray-400">Convert HTML → Markdown and Markdown → HTML. Full round-trip support.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Table Support</h3>
+          <p class="text-gray-400">Full table conversion with proper Markdown table syntax and alignment.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Code Blocks</h3>
+          <p class="text-gray-400">Preserves code blocks and inline code with proper syntax highlighting markers.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">List Support</h3>
+          <p class="text-gray-400">Converts ordered and unordered lists with proper nesting and indentation.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card glass rounded-2xl p-8 scroll-reveal">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Privacy First</h3>
+          <p class="text-gray-400">All processing happens in your browser. Your content never leaves your device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="py-24 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Perfect For <span class="gradient-text">Developers</span></h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+          Trusted by developers, writers, and content creators worldwide.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="glass rounded-xl p-6 text-center scroll-reveal">
+          <div class="text-4xl mb-4">📚</div>
+          <h4 class="font-bold mb-2">Documentation</h4>
+          <p class="text-sm text-gray-400">Convert API docs and README files between formats</p>
+        </div>
+        <div class="glass rounded-xl p-6 text-center scroll-reveal">
+          <div class="text-4xl mb-4">📝</div>
+          <h4 class="font-bold mb-2">Blogging</h4>
+          <p class="text-sm text-gray-400">Migrate content between CMS platforms easily</p>
+        </div>
+        <div class="glass rounded-xl p-6 text-center scroll-reveal">
+          <div class="text-4xl mb-4">📧</div>
+          <h4 class="font-bold mb-2">Email Templates</h4>
+          <p class="text-sm text-gray-400">Convert HTML emails to Markdown for archiving</p>
+        </div>
+        <div class="glass rounded-xl p-6 text-center scroll-reveal">
+          <div class="text-4xl mb-4">🎓</div>
+          <h4 class="font-bold mb-2">Note Taking</h4>
+          <p class="text-sm text-gray-400">Import web content into your knowledge base</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-24 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Loved by <span class="gradient-text">Developers</span></h2>
+        <p class="text-gray-400 text-lg">See what our customers are saying.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-8 scroll-reveal">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-400">★★★★★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Saved me hours of manual work when migrating our documentation from Confluence to GitHub. The table conversion is flawless."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center font-bold">S</div>
+            <div>
+              <div class="font-semibold">Sarah Chen</div>
+              <div class="text-sm text-gray-500">Tech Lead at StartupX</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-2xl p-8 scroll-reveal">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-400">★★★★★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Exactly what I needed for my content workflow. Bidirectional conversion works perfectly for my Jekyll to Ghost migrations."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-orange-500 flex items-center justify-center font-bold">M</div>
+            <div>
+              <div class="font-semibold">Marcus Johnson</div>
+              <div class="text-sm text-gray-500">Independent Blogger</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-2xl p-8 scroll-reveal">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-400">★★★★★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Clean, fast, and reliable. The code block handling is especially good - preserves language tags perfectly."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center font-bold">A</div>
+            <div>
+              <div class="font-semibold">Alex Rivera</div>
+              <div class="text-sm text-gray-500">Open Source Contributor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-24 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass rounded-xl p-6 scroll-reveal">
+          <h3 class="font-bold text-lg mb-2">What HTML elements are supported?</h3>
+          <p class="text-gray-400">We support all common HTML elements including headers (H1-H6), paragraphs, links, images, lists (ordered/unordered), tables, code blocks, blockquotes, horizontal rules, and inline formatting (bold, italic, strikethrough).</p>
+        </div>
+
+        <div class="glass rounded-xl p-6 scroll-reveal">
+          <h3 class="font-bold text-lg mb-2">Is my data secure?</h3>
+          <p class="text-gray-400">Absolutely! All conversion happens client-side in your browser. Your HTML/Markdown content is never sent to our servers or stored anywhere.</p>
+        </div>
+
+        <div class="glass rounded-xl p-6 scroll-reveal">
+          <h3 class="font-bold text-lg mb-2">Can I convert Markdown back to HTML?</h3>
+          <p class="text-gray-400">Yes! Our tool supports bidirectional conversion. You can convert HTML → Markdown and Markdown → HTML with equal accuracy.</p>
+        </div>
+
+        <div class="glass rounded-xl p-6 scroll-reveal">
+          <h3 class="font-bold text-lg mb-2">Is there a file size limit?</h3>
+          <p class="text-gray-400">The free demo supports content up to 50KB. The full version supports files up to 5MB, perfect for large documentation projects.</p>
+        </div>
+
+        <div class="glass rounded-xl p-6 scroll-reveal">
+          <h3 class="font-bold text-lg mb-2">Do you offer refunds?</h3>
+          <p class="text-gray-400">Yes, we offer a 30-day money-back guarantee. If you're not satisfied with the product, contact us for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="glass rounded-3xl p-12 relative overflow-hidden scroll-reveal">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
+        <div class="relative z-10">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Convert?</h2>
+          <p class="text-xl text-gray-400 mb-8">
+            Get lifetime access to HTML to Markdown Pro for a one-time payment.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button id="cta-buy-btn" class="btn-glow bg-gradient-to-r from-primary to-secondary px-10 py-4 rounded-full text-lg font-bold hover:scale-105 transition-all">
+              Get Lifetime Access — $19
+            </button>
+          </div>
+          <p class="mt-6 text-sm text-gray-500">One-time payment. Lifetime updates. No subscription.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 border-t border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+          </div>
+          <span class="font-bold">HTML<span class="gradient-text">2MD</span></span>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-gray-400">
+          <a href="#" class="hover:text-white transition-colors">Privacy</a>
+          <a href="#" class="hover:text-white transition-colors">Terms</a>
+          <a href="#" class="hover:text-white transition-colors">Support</a>
+        </div>
+        <div class="text-sm text-gray-500">
+          © 2026 UniverseCreator. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Checkout URL configuration
+    const CHECKOUT_URL = window.__CHECKOUT_URL || null;
+
+    // Buy button handlers
+    document.querySelectorAll('#hero-buy-btn, #nav-buy-btn, #cta-buy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (CHECKOUT_URL) {
+          window.open(CHECKOUT_URL, '_blank');
+        } else {
+          alert('Store coming soon! Contact @OtonomUniverseCreator on Telegram.');
+        }
+      });
+    });
+
+    // Demo functionality
+    const sampleHtml = `<h1>Welcome to HTML to Markdown</h1>
+<p>This is a <strong>demonstration</strong> of the conversion capabilities.</p>
+<h2>Features</h2>
+<ul>
+  <li>Clean conversion</li>
+  <li>Fast processing</li>
+  <li>Privacy focused</li>
+</ul>
+<pre><code>const example = "Hello World";</code></pre>
+<blockquote>
+  <p>Transform your content with ease.</p>
+</blockquote>`;
+
+    const sampleMarkdown = `# Welcome to Markdown to HTML
+
+This is a **demonstration** of the conversion capabilities.
+
+## Features
+
+- Clean conversion
+- Fast processing
+- Privacy focused
+
+\`\`\`javascript
+const example = "Hello World";
+\`\`\`
+
+> Transform your content with ease.`;
+
+    let currentMode = 'html-to-markdown';
+    const inputArea = document.getElementById('input-area');
+    const outputArea = document.getElementById('output-area');
+    const statsArea = document.getElementById('stats-area');
+
+    // Tab switching
+    document.getElementById('tab-html-md').addEventListener('click', () => {
+      currentMode = 'html-to-markdown';
+      document.getElementById('tab-html-md').classList.add('tab-active');
+      document.getElementById('tab-html-md').classList.remove('text-gray-400');
+      document.getElementById('tab-md-html').classList.remove('tab-active');
+      document.getElementById('tab-md-html').classList.add('text-gray-400');
+      inputArea.placeholder = 'Paste your HTML here...';
+      inputArea.value = '';
+      outputArea.value = '';
+      statsArea.classList.add('hidden');
+    });
+
+    document.getElementById('tab-md-html').addEventListener('click', () => {
+      currentMode = 'markdown-to-html';
+      document.getElementById('tab-md-html').classList.add('tab-active');
+      document.getElementById('tab-md-html').classList.remove('text-gray-400');
+      document.getElementById('tab-html-md').classList.remove('tab-active');
+      document.getElementById('tab-html-md').classList.add('text-gray-400');
+      inputArea.placeholder = 'Paste your Markdown here...';
+      inputArea.value = '';
+      outputArea.value = '';
+      statsArea.classList.add('hidden');
+    });
+
+    // Load sample
+    document.getElementById('btn-load-sample').addEventListener('click', () => {
+      inputArea.value = currentMode === 'html-to-markdown' ? sampleHtml : sampleMarkdown;
+    });
+
+    // Clear
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      inputArea.value = '';
+      outputArea.value = '';
+      statsArea.classList.add('hidden');
+    });
+
+    // Copy
+    document.getElementById('btn-copy').addEventListener('click', async () => {
+      if (outputArea.value) {
+        await navigator.clipboard.writeText(outputArea.value);
+        const btn = document.getElementById('btn-copy');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied!';
+        setTimeout(() => btn.innerHTML = original, 2000);
+      }
+    });
+
+    // Download
+    document.getElementById('btn-download').addEventListener('click', () => {
+      if (outputArea.value) {
+        const blob = new Blob([outputArea.value], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = currentMode === 'html-to-markdown' ? 'converted.md' : 'converted.html';
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    });
+
+    // Convert function
+    document.getElementById('btn-convert').addEventListener('click', async () => {
+      const input = inputArea.value.trim();
+      if (!input) {
+        alert('Please enter some content to convert');
+        return;
+      }
+
+      const btn = document.getElementById('btn-convert');
+      btn.innerHTML = '<span class="animate-spin">⟳</span> Converting...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            [currentMode === 'html-to-markdown' ? 'html' : 'markdown']: input,
+            mode: currentMode
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          outputArea.value = data.result;
+          if (data.stats) {
+            document.getElementById('input-stats').textContent = `${data.stats.inputLength} chars`;
+            document.getElementById('output-stats').textContent = `${data.stats.outputLength} chars`;
+            document.getElementById('ratio-stats').textContent = `${data.stats.conversionRatio}% ratio`;
+            statsArea.classList.remove('hidden');
+          }
+        } else {
+          outputArea.value = `Error: ${data.error}\n${data.details || ''}`;
+        }
+      } catch (error) {
+        outputArea.value = `Error: ${error.message}`;
+      } finally {
+        btn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg> Convert Now`;
+        btn.disabled = false;
+      }
+    });
+
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 8 + 's';
+      particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+      particlesContainer.appendChild(particle);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "html-to-markdown-pro",
+  "version": "1.0.0",
+  "description": "Convert HTML to clean Markdown instantly. Perfect for documentation, content migration and note-taking workflows.",
+  "main": "api/process.js",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "vercel-build": "echo 'Build complete'"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
