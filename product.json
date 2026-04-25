@@ -6,12 +6,19 @@
   "price": "9",
   "features": [],
   "tech_stack": "Vercel + Node.js",
-  "status": "building",
+  "status": "live",
   "vercel_url": null,
   "github_url": null,
-  "lemonsqueezy_checkout_url": null,
   "lemonsqueezy_product_id": null,
   "webhook_url": null,
-  "created_cycle": null,
-  "deployed_cycle": null
+  "created_cycle": 990,
+  "deployed_cycle": 1108,
+  "checkout_url": "https://buy.polar.sh/polar_cl_I59NmkCiR8cxVtqWfwPFgvCiWbxc3tEg8Bgv23COvXZ",
+  "seo_optimized": true,
+  "seo_optimized_at": "2026-04-21T17:47:00Z",
+  "payment_provider": "polar",
+  "spec_version": "1.0",
+  "polar_product_id": "b8cfa831-3edb-4205-aba4-dc2cfd549163",
+  "polar_product_price_id": "fc01f28a-3464-4459-a11e-515c85791621",
+  "polar_checkout_link_id": "73d61e47-8bc7-4265-b837-1f03acfb2828"
 }
